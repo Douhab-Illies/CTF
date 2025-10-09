@@ -1,0 +1,16 @@
+POST /torrent/login.php HTTP/1.1
+Host: popcorn.htb
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 35
+Origin: http://popcorn.htb
+Connection: keep-alive
+Referer: http://popcorn.htb/torrent/
+Cookie: /torrent/=; /torrent/torrents.php=; /torrent/login.php=; /torrent/index.php=; saveit_0=1; saveit_1=4; PHPSESSID=05381b0fcf99a2cdaa044bc7fbb1e232
+Upgrade-Insecure-Requests: 1
+Priority: u=0, i
+
+username=test&password=testpassword

