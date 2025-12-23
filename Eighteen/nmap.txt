@@ -1,0 +1,34 @@
+Starting Nmap 7.93 ( https://nmap.org ) at 2025-12-23 13:42 CET
+Nmap scan report for eighteen.htb (10.129.22.245)
+Host is up (0.018s latency).
+Not shown: 998 filtered tcp ports (no-response)
+PORT     STATE SERVICE  VERSION
+80/tcp   open  http     Microsoft IIS httpd 10.0
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: Welcome - eighteen.htb
+1433/tcp open  ms-sql-s Microsoft SQL Server 2022 16.00.1000.00; RC0+
+|_ms-sql-info: ERROR: Script execution failed (use -d to debug)
+|_ms-sql-ntlm-info: ERROR: Script execution failed (use -d to debug)
+|_ssl-date: 2025-12-23T19:43:21+00:00; +7h00m00s from scanner time.
+| ssl-cert: Subject: commonName=SSL_Self_Signed_Fallback
+| Not valid before: 2025-12-23T18:16:03
+|_Not valid after:  2055-12-23T18:16:03
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: general purpose
+Running (JUST GUESSING): Microsoft Windows 2016 (85%)
+OS CPE: cpe:/o:microsoft:windows_server_2016
+Aggressive OS guesses: Microsoft Windows Server 2016 (85%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: 6h59m59s
+
+TRACEROUTE (using port 80/tcp)
+HOP RTT      ADDRESS
+1   17.62 ms 10.10.14.1
+2   17.82 ms eighteen.htb (10.129.22.245)
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 40.07 seconds
