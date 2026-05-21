@@ -1,0 +1,7 @@
+22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.13 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   256 9c6953e1383bdecd420ac86bf895b362 (ECDSA)
+|_  256 3caab9be172d5e99ccffe1919038b739 (ED25519)
+80/tcp open  http    Apache httpd 2.4.52
+|_http-title: Did not follow redirect to http://guardian.htb/
+|_http-server-header: Apache/2.4.52 (Ubuntu)

